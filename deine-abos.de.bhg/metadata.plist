@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>kMDItemKeywords</key>
+	<array>
+		<string>startDate</string>
+		<string>Subscription</string>
+		<string>paymentType</string>
+		<string>paymentPeriod</string>
+		<string>payments</string>
+		<string>cancelDate</string>
+		<string>paymentAmount</string>
+	</array>
+	<key>kMDItemTextContent</key>
+	<string>deine-abos.de
+Api
+Model
+Subscription
+name*
+payments
+IOS-App
+WEB-App
+startDate*
+cancelDate
+paymentPeriod
+paymentType
+paymentAmount</string>
+</dict>
+</plist>
