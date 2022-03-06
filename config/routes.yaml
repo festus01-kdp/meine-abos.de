@@ -1,3 +1,12 @@
+# Beginn Routing
+index:
+    path: /
+    controller: App\Controller\HomeController::index
+
+listSubscription:
+    path: /subscriptions
+    controller: App\Controller\SubscriptionsController::list
+
 controllers:
     resource: ../src/Controller/
     type: annotation
