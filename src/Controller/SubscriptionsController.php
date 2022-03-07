@@ -12,7 +12,8 @@ class SubscriptionsController
      */
     public function list(Request $request): Response
     {
-        // var_dump($request);
-        return new Response('list subscritions');
+        $response = new Response();
+        $response->setContent('<p>Rückgabe</p>');
+        return $response;
     }
 }
