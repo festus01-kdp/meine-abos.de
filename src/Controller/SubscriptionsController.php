@@ -31,18 +31,24 @@ class SubscriptionsController extends AbstractController
 
         $returnArray[] = (new Subscription)
             ->setName("Netflix")
+            ->setPayments("")
             ->setStartDate(new DateTime())
-            ->toArray();
+            ->setCancelDate(new DateTime("31.12.2022"))
+            ->setPaymentPeriod(['Monthly']);
 
             $returnArray[] = (new Subscription)
             ->setName("Amazon Prime")
+            ->setPayments("")
             ->setStartDate(new DateTime())
-            ->toArray();
+            ->setCancelDate(new DateTime("31.12.2022"))
+            ->setPaymentPeriod(['Quarterly']);
             
             $returnArray[] = (new Subscription)
             ->setName("Spotify")
+            ->setPayments("")
             ->setStartDate(new DateTime())
-            ->toArray();    
+            ->setCancelDate(new DateTime("31.12.2022"))
+            ->setPaymentPeriod(['Weekly']);    
         
         return $returnArray;
 
