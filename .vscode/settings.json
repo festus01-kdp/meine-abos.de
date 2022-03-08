@@ -1,0 +1,11 @@
+{
+    "sqltools.connections": [
+        {
+            "previewLimit": 50,
+            "driver": "SQLite",
+            "name": "meine-abos.de",
+            "database": "${workspaceFolder:Symfony Projekte}/var/data.db"
+        }
+    ],
+    "sqltools.useNodeRuntime": true
+}

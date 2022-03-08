@@ -7,9 +7,7 @@ use Symfony\Component\HttpFoundation\Response;
 
 class HomeController
 {
-    /**
-     * @Route("/", name="index")
-     */
+
     public function index(Request $request): Response
     {
         var_dump($request);

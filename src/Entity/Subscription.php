@@ -1,31 +1,68 @@
 <?php
 
 declare(strict_types=1);
-namespace App\Model;
+namespace App\Entity;
 
 use DateTime;
 use JsonSerializable;
+use Doctrine\ORM\Mapping as ORM;
+
+/** 
+ * @ORM\Entity() 
+ */
+
 
 class Subscription implements JsonSerializable
 {
+
+	/** 
+	 * @ORM\Id
+	 * @ORM\GeneratedValue
+	 * @ORM\Column(type="integer") 
+	 */
+	protected int $Id; 
+
+	/** 
+	 * @ORM\Column(type="string", length=255) 
+	 * 
+	*/
     protected string $name;
-    protected string $payments;
+    
+	/** 
+	 * @ORM\Column(type="string", length=255) 
+	 * 
+	*/
+	protected string $payments;
+
+	/**
+	 * @ORM\Column(type="datetime")
+	 * 
+	 */
     protected DateTime $startDate;
+
+	/**
+	 * @ORM\Column(type="datetime")
+	 * 
+	 */
     protected DateTime $cancelDate;
-    protected array $paymentPeriod = ['Quarter','Monthly','Weekly'];
-    protected String $paymentType;
-    protected float $paymentAmount;
+
+	// protected array $paymentPeriod = ['Quarter','Monthly','Weekly'];
+    // protected String $paymentType;
+    // protected float $paymentAmount;
 
     public function jsonSerialize(): mixed
     {
         return [
+			//'id' => $this->Id,
             'name' => $this->name,
             'payments' => $this->payments,
             'startDate' => $this->startDate,
             'cancelDate' => $this->cancelDate,
-            'paymentPeriod' => $this->paymentPeriod,
+            // 'paymentPeriod' => $this->paymentPeriod,
         ];
     }
+
+
 
 	public function getName():string {
 		return $this->name;
@@ -54,14 +91,14 @@ class Subscription implements JsonSerializable
         return $this;
 	}  
 
-    public function getPaymenPeriod():array {
-		return $this->paymentPeriod;
-	}
+    // public function getPaymenPeriod():array {
+	// 	return $this->paymentPeriod;
+	// }
 
-	public function setPaymentPeriod(array $paymentPeriod):self {
-		$this->paymentPeriod = $paymentPeriod;
-        return $this;
-	}  
+	// public function setPaymentPeriod(array $paymentPeriod):self {
+	// 	$this->paymentPeriod = $paymentPeriod;
+    //     return $this;
+	// }  
 
 	public function getStartDate():DateTime {
 		return $this->startDate;
