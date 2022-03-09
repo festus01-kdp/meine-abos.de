@@ -11,58 +11,48 @@ use Doctrine\Persistence\ManagerRegistry;
 
 class SubscriptionsController extends AbstractController
 {
-    
+
     public function list(Request $request, ManagerRegistry $mr): Response
     {
 
+        $subscriptions = $mr->getRepository(Subscription::class)->findAll();
+
+        if (!$subscriptions) {
+            return $this->json(['success' => false], status: 404);
+        }
+
         $dataArray = [
-             'success' => true,
-             'subscriptions' => $this->generateSubscriptions($mr)
-            ];
+            'success' => true,
+            'subscriptions' => $subscriptions
+        ];
 
         return $this->json($dataArray);
-
     }
 
-    protected function generateSubscriptions(ManagerRegistry $mr): array{
+    public function add(Request $request, ManagerRegistry $mr): Response
+    {
+        $subscritionName = $request->request->get('name');
 
-        $returnArray = [];
+        if (is_string($subscritionName)) {
 
-        $entityManager = $mr->getManager();
-        
-        
+            $subscription = (new Subscription())
+                ->setName($subscritionName)
+                ->setStartDate(new DateTime())
+                ->setPayments('Card')
+                ->setCancelDate(new DateTime('31.12.2022'));
 
-        $subscription1 = (new Subscription)
-            ->setName("Netflix")
-            ->setPayments("")
-            ->setStartDate(new DateTime())
-            ->setCancelDate(new DateTime("31.12.2022"));
-            // ->setPaymentPeriod(['Monthly']);
+            $em = $mr->getManager();
 
-        $entityManager->persist($subscription1);
+            $em->persist($subscription);
+            $em->flush();
 
-        $subscription2 = (new Subscription)
-            ->setName("Amazon Prime")
-            ->setPayments("")
-            ->setStartDate(new DateTime())
-            ->setCancelDate(new DateTime("31.12.2022"));
-            // ->setPaymentPeriod(['Quarterly']);
+            if ($subscription->getId()) {
+                return $this->json(['success' => true, 'subscription' => $subscription], status: 201);
+            }
+        }
 
-            $entityManager->persist($subscription2);
-            
-        $subscription3 = (new Subscription)
-            ->setName("Spotify")
-            ->setPayments("")
-            ->setStartDate(new DateTime())
-            ->setCancelDate(new DateTime("31.12.2022"));
-            // ->setPaymentPeriod(['Weekly']);    
 
-            $entityManager->persist($subscription3);
 
-        // wegschreiben
-        $entityManager->flush();        
-
-        return $returnArray;
-
+        return $this->json(['success' => false], status: 400);
     }
 }

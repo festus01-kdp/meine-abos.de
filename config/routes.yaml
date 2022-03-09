@@ -3,9 +3,15 @@ index:
     path: /
     controller: App\Controller\HomeController::index
 
-listSubscription:
+listSubscriptions:
+    methods: GET
     path: /subscriptions
     controller: App\Controller\SubscriptionsController::list
+
+addSubscription:
+    methods: POST
+    path: /subscription
+    controller: App\Controller\SubscriptionsController::add
 
 controllers:
     resource: ../src/Controller/

@@ -8,7 +8,7 @@ use JsonSerializable;
 use Doctrine\ORM\Mapping as ORM;
 
 /** 
- * @ORM\Entity() 
+ * @ORM\Entity(repositoryClass="App\Repository\SubscriptionRepository") 
  */
 
 
@@ -53,7 +53,7 @@ class Subscription implements JsonSerializable
     public function jsonSerialize(): mixed
     {
         return [
-			//'id' => $this->Id,
+			'id' => $this->Id,
             'name' => $this->name,
             'payments' => $this->payments,
             'startDate' => $this->startDate,
@@ -62,7 +62,10 @@ class Subscription implements JsonSerializable
         ];
     }
 
-
+	public function getId():int
+	{
+		return $this->Id;
+	}
 
 	public function getName():string {
 		return $this->name;
