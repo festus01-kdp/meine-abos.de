@@ -5,6 +5,7 @@ namespace App\Entity;
 
 use DateTime;
 use JsonSerializable;
+use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\ORM\Mapping as ORM;
 
 /** 
@@ -24,13 +25,13 @@ class Subscription implements JsonSerializable
 
 	/** 
 	 * @ORM\Column(type="string", length=255) 
-	 * 
+	 * @Assert\NotBlank
 	*/
     protected string $name;
     
 	/** 
 	 * @ORM\Column(type="string", length=255) 
-	 * 
+	 * @Assert\NotBlank
 	*/
 	protected string $payments;
 
@@ -53,7 +54,7 @@ class Subscription implements JsonSerializable
     public function jsonSerialize(): mixed
     {
         return [
-			'id' => $this->Id,
+			 'id' => $this->Id,
             'name' => $this->name,
             'payments' => $this->payments,
             'startDate' => $this->startDate,

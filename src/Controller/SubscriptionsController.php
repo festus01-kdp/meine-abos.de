@@ -8,11 +8,13 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Doctrine\Persistence\ManagerRegistry;
+use Symfony\Component\Validator\ConstraintViolation;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 class SubscriptionsController extends AbstractController
 {
 
-    public function list(Request $request, ManagerRegistry $mr): Response
+    public function list(ManagerRegistry $mr): Response
     {
 
         $subscriptions = $mr->getRepository(Subscription::class)->findAll();
@@ -29,30 +31,36 @@ class SubscriptionsController extends AbstractController
         return $this->json($dataArray);
     }
 
-    public function add(Request $request, ManagerRegistry $mr): Response
+    public function add(Request $request, ManagerRegistry $mr, ValidatorInterface $validator): Response
     {
-        $subscritionName = $request->request->get('name');
 
-        if (is_string($subscritionName)) {
+        $subscriptionName = $request->request->get('name');
+        $subscriptionPayments = $request->request->get('payments');
 
-            $subscription = (new Subscription())
-                ->setName($subscritionName)
-                ->setStartDate(new DateTime())
-                ->setPayments('Card')
-                ->setCancelDate(new DateTime('31.12.2022'));
+        $subscription = (new Subscription())
+            ->setName($subscriptionName)
+            ->setStartDate(new DateTime())
+            ->setPayments($subscriptionPayments)
+            ->setCancelDate(new DateTime('31.12.2022'));
 
-            $em = $mr->getManager();
+        $errors = $validator->validate($subscription);
 
-            $em->persist($subscription);
-            $em->flush();
-
-            if ($subscription->getId()) {
-                return $this->json(['success' => true, 'subscription' => $subscription], status: 201);
+        if (sizeof($errors) > 0) {
+            $errorMessages = [];
+            /** @var ConstraintViolation $violation */
+            foreach ($errors as $violation) {
+                $errorMessages[] = $violation->getMessage();
+                $errorMessages[] = $violation->getPropertyPath();
             }
+            return $this->json(['success' => false, 'errors' => $errorMessages], status: 400);
         }
 
+        $em = $mr->getManager();
 
+        $em->persist($subscription);
+        $em->flush();
 
-        return $this->json(['success' => false], status: 400);
+        return $this->json(['success' => true, 'subscription' => $subscription], status: 201);
+
     }
 }
