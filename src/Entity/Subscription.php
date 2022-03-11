@@ -54,7 +54,7 @@ class Subscription implements JsonSerializable
     public function jsonSerialize(): mixed
     {
         return [
-			 'id' => $this->Id,
+			'id' => $this->Id,
             'name' => $this->name,
             'payments' => $this->payments,
             'startDate' => $this->startDate,

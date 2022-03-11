@@ -11,7 +11,37 @@ listSubscriptions:
 addSubscription:
     methods: POST
     path: /subscription
-    controller: App\Controller\SubscriptionsController::add
+    controller: App\Controller\SubscriptionsController::create
+
+updateSubscription:
+    methods: PUT
+    path: /subscription/{id}
+    controller: App\Controller\SubscriptionsController::update
+
+listPaymentTypes:
+    methods: GET
+    path: /paymentTypes
+    controller: App\Controller\PaymentTypeController::list
+
+createPaymentType:
+    methods: POST
+    path: /paymentType
+    controller: App\Controller\PaymentTypeController::create
+
+readPaymentType:
+    methods: GET
+    path: /paymentType
+    controller: App\Controller\PaymentTypeController::read
+
+updatePaymentType:
+    methods: PUT
+    path: /paymentType/{id}
+    controller: App\Controller\PaymentTypeController::update
+
+deletePaymentType:
+    methods: DELETE
+    path: /paymentType
+    controller: App\Controller\PaymentTypeController::delete
 
 controllers:
     resource: ../src/Controller/

@@ -4,10 +4,12 @@
 <dict>
 	<key>kMDItemKeywords</key>
 	<array>
-		<string>startDate</string>
 		<string>Subscription</string>
+		<string>startDate</string>
 		<string>paymentType</string>
+		<string>PaymentType</string>
 		<string>paymentPeriod</string>
+		<string>Ressourcen</string>
 		<string>payments</string>
 		<string>cancelDate</string>
 		<string>paymentAmount</string>
@@ -15,7 +17,7 @@
 	<key>kMDItemTextContent</key>
 	<string>deine-abos.de
 Api
-Model
+Ressourcen
 Subscription
 name*
 payments
@@ -25,6 +27,7 @@ startDate*
 cancelDate
 paymentPeriod
 paymentType
-paymentAmount</string>
+paymentAmount
+PaymentType</string>
 </dict>
 </plist>
