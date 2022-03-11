@@ -47,6 +47,11 @@ class Subscription implements JsonSerializable
 	 */
     protected DateTime $cancelDate;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=PaymentType::class, inversedBy="subscriptions")
+     */
+    private $paymentType;
+
 	// protected array $paymentPeriod = ['Quarter','Monthly','Weekly'];
     // protected String $paymentType;
     // protected float $paymentAmount;
@@ -64,36 +69,36 @@ class Subscription implements JsonSerializable
     }
 
 	public function getId():int
-	{
-		return $this->Id;
-	}
+         	{
+         		return $this->Id;
+         	}
 
 	public function getName():string {
-		return $this->name;
-	}
+         		return $this->name;
+         	}
 
 	public function setName(string $name):self {
-		$this->name = $name;
-        return $this;
-	}
+         		$this->name = $name;
+                 return $this;
+         	}
 
     public function getPayments():string {
 		return $this->payments;
 	}
 
 	public function setPayments(string $payments):self {
-		$this->payments = $payments;
-        return $this;
-	}    
+         		$this->payments = $payments;
+                 return $this;
+         	}    
 
     public function getCancelDate():DateTime {
 		return $this->cancelDate;
 	}
 
 	public function setCancelDate(DateTime $cancelDate):self {
-		$this->cancelDate = $cancelDate;
-        return $this;
-	}  
+         		$this->cancelDate = $cancelDate;
+                 return $this;
+         	}  
 
     // public function getPaymenPeriod():array {
 	// 	return $this->paymentPeriod;
@@ -105,13 +110,25 @@ class Subscription implements JsonSerializable
 	// }  
 
 	public function getStartDate():DateTime {
-		return $this->startDate;
-	}
+         		return $this->startDate;
+         	}
 
 	public function setStartDate(DateTime $startDate):self {
-		$this->startDate = $startDate;
+         		$this->startDate = $startDate;
+                 return $this;
+         	}
+
+    public function getPaymentType(): ?PaymentType
+    {
+        return $this->paymentType;
+    }
+
+    public function setPaymentType(?PaymentType $paymentType): self
+    {
+        $this->paymentType = $paymentType;
+
         return $this;
-	}
+    }
 
 
     
