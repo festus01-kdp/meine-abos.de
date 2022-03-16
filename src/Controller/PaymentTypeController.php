@@ -56,8 +56,16 @@ class PaymentTypeController extends AbstractController
         return $this->json(['success' => true, 'paymentType' => $paymentType], status: 201);
     }
 
-    public function read(): Response
+    public function read(int $id, Request $request, ManagerRegistry $mr): Response
     {
+
+        $paymentType = $mr->getRepository(PaymentType::class)->find($id);
+
+        if (!$paymentType) {
+            return $this->json([], 400);
+        }
+
+        return $this->json(['data' => $paymentType], 200);
 
     }
 
@@ -87,7 +95,7 @@ class PaymentTypeController extends AbstractController
         $em = $mr->getManager();
         $em->flush();
 
-        return $this->json(['success' => true, 'Id' => $id]);
+        return $this->json(['success' => true, 'paymentType' => $paymentType]);
     }
 
     public function delete(): Response
