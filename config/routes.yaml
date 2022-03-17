@@ -8,10 +8,10 @@ listSubscriptions:
     path: /subscriptions
     controller: App\Controller\SubscriptionsController::list
 
-createSubscription:
-    methods: POST
-    path: /subscription
-    controller: App\Controller\SubscriptionsController::create
+newSubscription:
+    methods: [GET, POST]
+    path: /subscription/new
+    controller: App\Controller\SubscriptionsController::new
 
 readSubscription:
     methods: GET

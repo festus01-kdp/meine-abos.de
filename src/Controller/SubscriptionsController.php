@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\PaymentType;
 use App\Entity\Subscription;
+use App\Form\SubscriptionType;
 use App\Serializer\SubscriptionNormalizer;
 use DateTime;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -11,67 +12,48 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\Routing\RouterInterface;
-use Symfony\Component\Serializer\Serializer;
 use Symfony\Component\Validator\ConstraintViolation;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 class SubscriptionsController extends AbstractController
 {
 
-    public function list(ManagerRegistry $mr, RouterInterface $router): Response
+    public function list(ManagerRegistry $mr, RouterInterface $router, SubscriptionNormalizer $subscriptionNormalizer): Response
     {
 
         $subscriptions = $mr->getRepository(Subscription::class)->findAll();
 
-        if (!$subscriptions) {
-            return $this->json(['success' => false], status: 404);
-        }
-        $serializer = new Serializer([new SubscriptionNormalizer($router)]);
-        $subscriptionsCollection = [];
 
-        foreach ($subscriptions as $subscription) {
-            $normalize = $serializer->normalize($subscription, null, ['circular_reference_handler' => function ($object) {
-                return $object->getId();
-            }]);
-
-            $subscriptionsCollection[] = $normalize;
-
-        }
-
-        $dataArray = [
-            'data' => $subscriptionsCollection,
-            'links' => $router->generate('listSubscriptions')
-        ];
-
-        return $this->json($dataArray);
+        return $this->render('subscription/list.html.twig', [
+            'subscriptions' => $subscriptions
+        ]);
 
     }
 
-    public function create(Request $request, ManagerRegistry $mr, ValidatorInterface $validator, RouterInterface $router): Response
+    public function new(Request $request, RouterInterface $router, ManagerRegistry $mr): Response
     {
 
-        $routerInterface = $router->getRouteCollection()->get('createSubscription');
         $subscription = new Subscription($router);
+        //$subscription->setPayments('Card');
+        $subscription->setStartDate(new DateTime());
+        $subscription->setCancelDate(new DateTime());
 
-        $this->setDataToSubscription($request->request->all(), $subscription);
+        $eingabeFormular = $this->createForm(SubscriptionType::class, $subscription);
 
-        $errors = $validator->validate($subscription);
+        $eingabeFormular->handleRequest($request);
 
-        if (sizeof($errors) > 0) {
-            $errorMessages = [];
-            /** @var ConstraintViolation $violation */
-            foreach ($errors as $violation) {
-                $errorMessages[] = $violation->getPropertyPath() . ":" . $violation->getMessage();
-            }
-            return $this->json(['success' => false, 'errors' => $errorMessages], status: 400);
+        if ($eingabeFormular->isSubmitted() && $eingabeFormular->isValid()) {
+            $em = $mr->getManager();
+            $em->persist($subscription);
+            $em->flush();
+            return $this->redirectToRoute('listSubscriptions');
+
         }
 
-        $em = $mr->getManager();
+        return $this->render('subscription/new.html.twig', [
+            'formular' => $eingabeFormular->createView()
+        ]);
 
-        $em->persist($subscription);
-        $em->flush();
-
-        return $this->json(['success' => true, 'subscription' => $subscription], status: 201);
 
     }
 

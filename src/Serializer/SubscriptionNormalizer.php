@@ -4,10 +4,6 @@ namespace App\Serializer;
 
 use App\Entity\Subscription;
 use Symfony\Component\Routing\RouterInterface;
-use Symfony\Component\Serializer\Exception\CircularReferenceException;
-use Symfony\Component\Serializer\Exception\ExceptionInterface;
-use Symfony\Component\Serializer\Exception\InvalidArgumentException;
-use Symfony\Component\Serializer\Exception\LogicException;
 use Symfony\Component\Serializer\Normalizer\ContextAwareNormalizerInterface;
 
 class SubscriptionNormalizer implements ContextAwareNormalizerInterface
@@ -37,13 +33,6 @@ class SubscriptionNormalizer implements ContextAwareNormalizerInterface
         $returnData['links'] = [
             'self' => $this->router->generate('readSubscription', ['id' => $object->getId()])
         ];
-        /*$returnData['relationships'] = [
-            'paymentType' => [
-                'links' =>  [
-                    'related' => 'Andern'
-                ]
-            ]
-        ];*/
 
         $this->createRelationLinks($returnData, $object);
 
