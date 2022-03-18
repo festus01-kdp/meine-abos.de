@@ -34,9 +34,6 @@ class SubscriptionsController extends AbstractController
     {
 
         $subscription = new Subscription($router);
-        //$subscription->setPayments('Card');
-        $subscription->setStartDate(new DateTime());
-        $subscription->setCancelDate(new DateTime());
 
         $eingabeFormular = $this->createForm(SubscriptionType::class, $subscription);
 
