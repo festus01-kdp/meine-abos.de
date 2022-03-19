@@ -1,5 +1,9 @@
-<tr>
-    <td>{{ subscription.name }}</td>
-    <td>{{ subscription.payments }}</td>
-    <td>{{ subscription.startDate|format_datetime(pattern = 'dd.MM.y') }}</td>
-</tr>
+<div class="col-sm-6 mb-3">
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">{{ subscription.name }}</h5>
+            <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+            <a href="{{ path('detailSubscription', {'id' : subscription.id}) }}" class="btn btn-primary">Details</a>
+        </div>
+    </div>
+</div>

@@ -13,7 +13,7 @@ newSubscription:
     path: /subscription/new
     controller: App\Controller\SubscriptionsController::new
 
-readSubscription:
+detailSubscription:
     methods: GET
     path: /subscription/{id}
     controller: App\Controller\SubscriptionsController::read

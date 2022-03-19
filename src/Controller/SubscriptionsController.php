@@ -58,11 +58,11 @@ class SubscriptionsController extends AbstractController
     {
         $subscription = $mr->getRepository(Subscription::class)->find($id);
 
-        if (!$subscription) {
-            return $this->json([], 400);
-        }
+        return $this->render('subscription/detail.html.twig', [
+            'subscription' => $subscription
+        ]);
 
-        return $this->json(['data' => $subscription]);
+
     }
 
     public function update(int $id, Request $request, ManagerRegistry $mr, ValidatorInterface $validator): Response
