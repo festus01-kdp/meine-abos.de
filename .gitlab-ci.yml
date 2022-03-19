@@ -4,5 +4,5 @@ stages:
 deploy to prod server:
   stage: deploy
   script:
-    - echo "Hello World"
+    - echo "Hello GitLab"
     - ls -la
