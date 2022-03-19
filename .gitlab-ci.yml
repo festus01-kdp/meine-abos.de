@@ -6,3 +6,4 @@ deploy to prod server:
   script:
     - echo "Hello GitLab"
     - ls -la
+
