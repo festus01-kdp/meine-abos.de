@@ -1,8 +1,0 @@
-stages:
-  - deploy
-
-deploy to prod server:
-  stage: deploy
-  script:
-    - echo "Hello World"
-    - ls -la
