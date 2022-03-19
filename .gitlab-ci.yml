@@ -8,7 +8,7 @@ deploy to prod server:
     - echo "$DEPLOYMENT_KEY" | tr -d '\r' | ssh-add -
     - ssh-keyscan $DEPLOYMENT_HOST >> ~/.ssh/known_hosts
   script:
-    - echo "Hello GitLab"
+    - echo "Hello GitLab 2"
     - ls -la
     - scp Readme.md $DEPLOYMENT_USER@DEPLOYMENT_HOST:deine-abos.de/
 
