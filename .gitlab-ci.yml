@@ -5,13 +5,21 @@ deploy to prod server:
   stage: deploy
   before_script:
     - eval $(ssh-agent -s)
-    - echo "$DEPLOYMENT_KEY" | tr -d '\r' | ssh-add -
-    - echo "Arbeitsverzeichnis"
-    - pwd
-    - ls -la /builds/klausdieterpernak
-    - ssh-keyscan $DEPLOYMENT_HOST >> /Users/klaus-dieterpernak/.ssh/known_hosts
+    - echo "$DEPLOYMENT_KEY" | tr -d '\r' | ssh-add - > /dev/null
+    - mkdir -p ~/.ssh
+    - chmod 700 ~/.ssh
+    - ls -la
+    - ssh-keyscan $DEPLOYMENT_HOST >> ~/.ssh/known_hosts
+    - chmod 644 ~/.ssh/known_hosts
   script:
     - echo "Hello GitLab 2"
     - ls -la
     - scp Readme.md $DEPLOYMENT_USER@$DEPLOYMENT_HOST:deine-abos.de/
+
+#  eval $(ssh-agent -s)
+#  echo "$SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add - > /dev/null
+#  mkdir -p ~/.ssh
+#  chmod 700 ~/.ssh
+#  ssh-keyscan -H "$SSH_KNOWN_HOSTS" > ~/.ssh/known_hosts
+#  chmod 644 ~/.ssh/known_hosts
 
