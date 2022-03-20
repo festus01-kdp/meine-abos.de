@@ -10,5 +10,5 @@ deploy to prod server:
   script:
     - echo "Hello GitLab 2"
     - ls -la
-    - scp Readme.md $DEPLOYMENT_USER@$DEPLOYMENT_HOST:deine-abos.de/
+    - scp Readme.md DEPLOYMENT_USER@DEPLOYMENT_HOST:deine-abos.de/
 
