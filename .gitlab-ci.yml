@@ -5,7 +5,7 @@ deploy to prod server:
   stage: deploy
   before_script:
     - eval $(ssh-agent -s)
-    - echo "$DEPLOYMENT_KEY" | tr -d '\r' | ssh-add - > /dev/null
+    - echo "$DEPLOYMENT_KEY" | tr -d '\r' | ssh-add -
     - mkdir -p ~/.ssh
     - chmod 700 ~/.ssh
     - ls -la
