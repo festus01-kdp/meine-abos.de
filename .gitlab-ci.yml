@@ -6,9 +6,9 @@ deploy to prod server:
   before_script:
     - eval $(ssh-agent -s)
     - echo "$DEPLOYMENT_KEY" | tr -d '\r' | ssh-add -
-#    - ssh-keyscan $DEPLOYMENT_HOST >> .ssh/known_hosts
+    - ssh-keyscan $DEPLOYMENT_HOST >> /Users/klaus-dieterpernak/.ssh/known_hosts
   script:
     - echo "Hello GitLab 2"
     - ls -la
-    - scp Readme.md DEPLOYMENT_USER@DEPLOYMENT_HOST:deine-abos.de/
+    - scp Readme.md $DEPLOYMENT_USER@$DEPLOYMENT_HOST:deine-abos.de/
 
