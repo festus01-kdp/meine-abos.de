@@ -14,7 +14,7 @@ deploy to prod server:
   script:
     - echo "Hello GitLab 4"
     - ls -la
-    - scp Readme.md $DEPLOYMENT_USER@$DEPLOYMENT_HOST:deine-abos.de/
+    - scp -r * $DEPLOYMENT_USER@$DEPLOYMENT_HOST:deine-abos.de/
 
 #  eval $(ssh-agent -s)
 #  echo "$SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add - > /dev/null
