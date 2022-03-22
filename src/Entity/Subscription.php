@@ -60,6 +60,21 @@ class Subscription
      */
     protected ?PaymentType $paymentType;
 
+    /**
+     * @ORM\Column(type="float", nullable=true)
+     */
+    protected $costs;
+
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    protected $period;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Category::class)
+     */
+    private $category;
+
     // protected array $paymentPeriod = ['Quarter','Monthly','Weekly'];
     // protected String $paymentType;
     // protected float $paymentAmount;
@@ -131,6 +146,42 @@ class Subscription
     public function setPaymentType(?PaymentType $paymentType): self
     {
         $this->paymentType = $paymentType;
+
+        return $this;
+    }
+
+    public function getCosts(): ?float
+    {
+        return $this->costs;
+    }
+
+    public function setCosts(?float $costs): self
+    {
+        $this->costs = $costs;
+
+        return $this;
+    }
+
+    public function getPeriod(): ?int
+    {
+        return $this->period;
+    }
+
+    public function setPeriod(?int $period): self
+    {
+        $this->period = $period;
+
+        return $this;
+    }
+
+    public function getCategory(): ?Category
+    {
+        return $this->category;
+    }
+
+    public function setCategory(?Category $category): self
+    {
+        $this->category = $category;
 
         return $this;
     }

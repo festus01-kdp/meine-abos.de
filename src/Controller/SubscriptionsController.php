@@ -42,7 +42,7 @@ class SubscriptionsController extends AbstractController
         if ($eingabeFormular->isSubmitted() && $eingabeFormular->isValid()) {
             $em = $mr->getManager();
             $em->persist($subscription);
-            $em->flush();
+
             return $this->redirectToRoute('listSubscriptions');
 
         }
@@ -53,15 +53,25 @@ class SubscriptionsController extends AbstractController
 
 
     }
-
-    public function read(int $id, Request $request, ManagerRegistry $mr): Response
+    /** Detailseite
+     *
+     */
+    public function detail(int $id, Request $request, ManagerRegistry $mr): Response
     {
         $subscription = $mr->getRepository(Subscription::class)->find($id);
 
-        return $this->render('subscription/detail.html.twig', [
-            'subscription' => $subscription
-        ]);
+        $eingabeFormular = $this->createForm(SubscriptionType::class, $subscription);
 
+        $eingabeFormular->handleRequest($request);
+
+        if ($eingabeFormular->isSubmitted() && $eingabeFormular->isValid()) {
+            $em = $mr->getManager();
+            $em->flush();
+        }
+
+        return $this->render('subscription/detail.html.twig', [
+            'formular' => $eingabeFormular->createView()
+        ]);
 
     }
 

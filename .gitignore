@@ -8,11 +8,6 @@
 /var/
 /vendor/
 ###< symfony/framework-bundle ###
-/src/Repository/ArticleRepository.php
-/src/Repository/ProductRepository.php
-### KDP
 /.idea/
-
-/src/Repository/CategoryRepository.php
 /__MACOSX/
 /public/img/deineabos.afdesign

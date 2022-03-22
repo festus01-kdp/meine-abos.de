@@ -3,10 +3,8 @@
 declare(strict_types=1);
 namespace App\Entity;
 
-use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
-use JsonSerializable;
 use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -14,7 +12,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Entity(repositoryClass="App\Repository\PaymentTypeRepository")
  */
 
-class PaymentType implements JsonSerializable
+class PaymentType
 {
 
 	/** 
@@ -22,7 +20,7 @@ class PaymentType implements JsonSerializable
 	 * @ORM\GeneratedValue
 	 * @ORM\Column(type="integer") 
 	 */
-	protected int $Id; 
+	protected int $Id;
 
 	/** 
 	 * @ORM\Column(type="string", length=255) 
@@ -46,18 +44,9 @@ class PaymentType implements JsonSerializable
         $this->subscriptions = new ArrayCollection();
     }
 
-    public function jsonSerialize(): array
-    {
-        return [
-			'id' => $this->Id,
-            'name' => $this->name,
-            'description' => $this->description ?? '',
-        ];
-    }
-
-	public function getId():int
+	public function getId(): ?int
                         	{
-                        		return $this->Id;
+                        		return $this->id;
                         	}
 
 	public function getName():string {

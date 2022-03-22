@@ -14,9 +14,9 @@ newSubscription:
     controller: App\Controller\SubscriptionsController::new
 
 detailSubscription:
-    methods: GET
+    methods: [GET, POST]
     path: /subscription/{id}
-    controller: App\Controller\SubscriptionsController::read
+    controller: App\Controller\SubscriptionsController::detail
 
 updateSubscription:
     methods: PUT
@@ -47,31 +47,6 @@ deletePaymentType:
     methods: DELETE
     path: /paymentType
     controller: App\Controller\PaymentTypeController::delete
-
-listProducts:
-    methods: GET
-    path: /products
-    controller: App\Controller\ProductController::list
-
-createProduct:
-    methods: POST
-    path: /product
-    controller: App\Controller\ProductController::create
-
-readProduct:
-    methods: GET
-    path: /product/{id}
-    controller: App\Controller\ProductController::read
-
-updateProduct:
-    methods: PUT
-    path: /product
-    controller: App\Controller\ProductController::update
-
-deleteProduct:
-    methods: DELETE
-    path: /product
-    controller: App\Controller\ProductController::delete
 
 controllers:
     resource: ../src/Controller/
