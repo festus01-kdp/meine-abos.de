@@ -6,6 +6,7 @@
 /config/secrets/prod/prod.decrypt.private.php
 /public/bundles/
 /var/
+!/var/meineabos.db
 /vendor/
 ###< symfony/framework-bundle ###
 /.idea/
