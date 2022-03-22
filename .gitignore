@@ -3,6 +3,7 @@
 /.env.local
 /.env.local.php
 /.env.*.local
+/Archiv.zip
 /config/secrets/prod/prod.decrypt.private.php
 /public/bundles/
 /var/
@@ -12,3 +13,5 @@
 /.idea/
 /__MACOSX/
 /public/img/deineabos.afdesign
+/__MACOSX/
+/deine-abos.de.bhg/
