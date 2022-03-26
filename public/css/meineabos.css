@@ -3,3 +3,11 @@
     border:2px solid #a6a6a6;
     padding:14px;
 }
+.login-alert{
+    max-width: 320px;
+    width: 90%;
+    margin: 0 auto;
+}
+#fa-user{
+    color: #0d6efd;
+}

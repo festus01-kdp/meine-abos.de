@@ -1,8 +1,16 @@
 {% extends 'base.html.twig' %}
-
 {% block body %}
+
     <div class="container">
-        {{ form(formular) }}
+        <div>
+            <h2 class="text-center">
+                {{ title }}
+            </h2>
+        </div>
+        <div>
+            {{ form(formular) }}
+        </div>
+
     </div>
 
 {% endblock %}

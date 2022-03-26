@@ -70,7 +70,8 @@ class SubscriptionsController extends AbstractController
         }
 
         return $this->render('subscription/detail.html.twig', [
-            'formular' => $eingabeFormular->createView()
+            'formular' => $eingabeFormular->createView(),
+            'title' => $subscription->getName()
         ]);
 
     }

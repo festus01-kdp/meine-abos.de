@@ -10,40 +10,15 @@
     {% block stylesheets %}
         {{ encore_entry_link_tags('app') }}
         <link rel="stylesheet" href="{{ asset('css/bootstrap.css') }}">
+        <link rel="stylesheet" href="{{ asset('fonts/font-awesome.min.css') }}">
         <link rel="stylesheet" href="{{ asset('css/meineabos.css') }}">
         <link rel="stylesheet" href="{{ asset('css/Navigation-Clean.css') }}">
+        <link rel="stylesheet" href="{{ asset('css/Login-Form-Clean.css') }}">
     {% endblock %}
 </head>
 <body>
 {% block navigation %}
-    <nav class="navbar navbar-light navbar-expand-lg navigation-clean ms-5 me-5 mt-2 shadow p-3 mb-5 bg-body rounded">
-        <div class="container-fluid">
-            <a class="navbar-brand" href="{{ path('index') }}">
-                <img src="{{ asset('img/deineabos.svg') }}" alt="deine Abos" width="36"
-                     class="d-inline-block mb-1 me-2">
-                Deine Abos
-            </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav mr-auto">
-                    <li class="nav-item active">
-                        <a class="nav-link" href="{{ path('index') }}">Home</a>
-                    </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
-                           data-bs-toggle="dropdown" aria-expanded="false">Subscriptions</a>
-                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <a class="dropdown-item" href="{{ path('listSubscriptions') }}">Subscription Liste</a>
-                            <a class="dropdown-item" href="{{ path('newSubscription') }}">Subscription Neu</a>
-                        </div>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </nav>
+    {% include 'navbar.html.twig' %}
 {% endblock %}
 {% block body %}{% endblock %}
 {% block javascripts %}
