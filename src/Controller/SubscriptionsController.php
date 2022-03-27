@@ -11,17 +11,28 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Doctrine\Persistence\ManagerRegistry;
+use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Validator\ConstraintViolation;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
+
+/**
+ * Class SubscriptionsController
+ * @package App\Controller
+ * @Route("/app")
+ */
 class SubscriptionsController extends AbstractController
 {
 
-    public function list(ManagerRegistry $mr, RouterInterface $router, SubscriptionNormalizer $subscriptionNormalizer): Response
+    /**
+     * @Route("/subscriptions", name="listSubscriptions")
+     */
+
+    public function list(ManagerRegistry $mr): Response
     {
 
-        $subscriptions = $mr->getRepository(Subscription::class)->findAll();
+        $subscriptions = $mr->getRepository(Subscription::class)->findBy(['user' => $this->getUser()]);
 
 
         return $this->render('subscription/list.html.twig', [
@@ -29,7 +40,9 @@ class SubscriptionsController extends AbstractController
         ]);
 
     }
-
+    /**
+     * @Route("/subscription/new", name="newSubscription", methods={"GET","POST"})
+     */
     public function new(Request $request, RouterInterface $router, ManagerRegistry $mr): Response
     {
 
@@ -53,12 +66,13 @@ class SubscriptionsController extends AbstractController
 
 
     }
-    /** Detailseite
-     *
+    /**
+     * @Route("/subscription/{id}", name="detailSubscription", methods={"GET","POST"})
      */
     public function detail(int $id, Request $request, ManagerRegistry $mr): Response
     {
         $subscription = $mr->getRepository(Subscription::class)->find($id);
+        $this->isGranted('POST_MANAGE', $subscription);
 
         $eingabeFormular = $this->createForm(SubscriptionType::class, $subscription);
 
@@ -75,7 +89,9 @@ class SubscriptionsController extends AbstractController
         ]);
 
     }
-
+    /**
+     * @Route("/subscription/{id}", name="updateSubscription", methods={"PUT"})
+     */
     public function update(int $id, Request $request, ManagerRegistry $mr, ValidatorInterface $validator): Response
     {
         $subscription = $mr->getRepository(Subscription::class)->find($id);

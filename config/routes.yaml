@@ -3,26 +3,6 @@ index:
     path: /
     controller: App\Controller\HomeController::index
 
-listSubscriptions:
-    methods: GET
-    path: /subscriptions
-    controller: App\Controller\SubscriptionsController::list
-
-newSubscription:
-    methods: [GET, POST]
-    path: /subscription/new
-    controller: App\Controller\SubscriptionsController::new
-
-detailSubscription:
-    methods: [GET, POST]
-    path: /subscription/{id}
-    controller: App\Controller\SubscriptionsController::detail
-
-updateSubscription:
-    methods: PUT
-    path: /subscription/{id}
-    controller: App\Controller\SubscriptionsController::update
-
 listPaymentTypes:
     methods: GET
     path: /paymentTypes

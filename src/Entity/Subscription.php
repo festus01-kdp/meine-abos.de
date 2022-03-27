@@ -75,6 +75,11 @@ class Subscription
      */
     private $category;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="subscriptions")
+     */
+    private $user;
+
     // protected array $paymentPeriod = ['Quarter','Monthly','Weekly'];
     // protected String $paymentType;
     // protected float $paymentAmount;
@@ -182,6 +187,18 @@ class Subscription
     public function setCategory(?Category $category): self
     {
         $this->category = $category;
+
+        return $this;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): self
+    {
+        $this->user = $user;
 
         return $this;
     }
