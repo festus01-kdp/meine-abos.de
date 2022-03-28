@@ -5,7 +5,6 @@ namespace App\Controller;
 use App\Entity\PaymentType;
 use App\Entity\Subscription;
 use App\Form\SubscriptionType;
-use App\Serializer\SubscriptionNormalizer;
 use DateTime;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
