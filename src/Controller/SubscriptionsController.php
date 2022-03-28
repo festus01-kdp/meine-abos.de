@@ -12,7 +12,6 @@ use Symfony\Component\HttpFoundation\Response;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Routing\RouterInterface;
-use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 use Symfony\Component\Validator\ConstraintViolation;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
@@ -47,6 +46,7 @@ class SubscriptionsController extends AbstractController
     {
 
         $subscription = new Subscription($router);
+        $subscription->setUser($this->getUser());
 
         $eingabeFormular = $this->createForm(SubscriptionType::class, $subscription);
 
@@ -81,11 +81,25 @@ class SubscriptionsController extends AbstractController
         $eingabeFormular->handleRequest($request);
 
         if ($eingabeFormular->isSubmitted() && $eingabeFormular->isValid()) {
+            // Speichern
+            if ($eingabeFormular->getClickedButton() === $eingabeFormular->get('save')){
 
-            $em = $mr->getManager();
-            $em->flush();
+                $em = $mr->getManager();
+                $em->flush();
+
+                return $this->render('subscription/detail.html.twig', [
+                    'formular' => $eingabeFormular->createView(),
+                    'title' => $subscription->getName()
+                ]);
+            }
+            // Cancel
+            if ($eingabeFormular->getClickedButton() === $eingabeFormular->get('cancel')){
+                return $this->redirectToRoute('listSubscriptions');
+            }
+
         }
-
+        // In detail.html.twig ist formular als Variable verfügbar
+        // siehe in der twig Datei
         return $this->render('subscription/detail.html.twig', [
             'formular' => $eingabeFormular->createView(),
             'title' => $subscription->getName()

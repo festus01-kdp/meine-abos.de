@@ -48,7 +48,8 @@ class SubscriptionType extends AbstractType
             ->add('cancelDate', DateType::class, [
                 'widget' => 'single_text'
             ])
-            ->add('save', SubmitType::class, array('label' => 'Speichern'));
+            ->add('save', SubmitType::class, array('label' => 'Speichern'))
+            ->add('cancel', SubmitType::class, array('label' => 'Zurück'));
     }
 
     public function configureOptions(OptionsResolver $resolver)
