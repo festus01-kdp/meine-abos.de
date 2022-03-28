@@ -12,6 +12,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Routing\RouterInterface;
+use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 use Symfony\Component\Validator\ConstraintViolation;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
@@ -52,8 +53,10 @@ class SubscriptionsController extends AbstractController
         $eingabeFormular->handleRequest($request);
 
         if ($eingabeFormular->isSubmitted() && $eingabeFormular->isValid()) {
+
             $em = $mr->getManager();
             $em->persist($subscription);
+            $em->flush();
 
             return $this->redirectToRoute('listSubscriptions');
 
@@ -71,13 +74,14 @@ class SubscriptionsController extends AbstractController
     public function detail(int $id, Request $request, ManagerRegistry $mr): Response
     {
         $subscription = $mr->getRepository(Subscription::class)->find($id);
-        $this->isGranted('POST_MANAGE', $subscription);
+        $this->denyAccessUnlessGranted('POST_MANAGE', $subscription);
 
         $eingabeFormular = $this->createForm(SubscriptionType::class, $subscription);
 
         $eingabeFormular->handleRequest($request);
 
         if ($eingabeFormular->isSubmitted() && $eingabeFormular->isValid()) {
+
             $em = $mr->getManager();
             $em->flush();
         }
@@ -94,6 +98,7 @@ class SubscriptionsController extends AbstractController
     public function update(int $id, Request $request, ManagerRegistry $mr, ValidatorInterface $validator): Response
     {
         $subscription = $mr->getRepository(Subscription::class)->find($id);
+        $this->denyAccessUnlessGranted('POST_MANAGE', $subscription);
         $req = null;
         if (!$subscription) {
             return $this->json(['success' => false, 'message' => 'ID: ' . $id . ' not Found']);

@@ -43,13 +43,12 @@ class SubscriptionVoter extends Voter
             case self::VIEW:
 
                 break;
+
             case self::MANAGE:
                 if($subject->getUser() === $user) {
                     return true;
                 }
-                break;
         }
-
         return false;
     }
 }

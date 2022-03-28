@@ -37,12 +37,6 @@ class Subscription
     protected string $name;
 
     /**
-     * @ORM\Column(type="string", length=255)
-     * @Assert\NotBlank
-     */
-    protected string $payments;
-
-    /**
      * @ORM\Column(type="datetime")
      *
      */
