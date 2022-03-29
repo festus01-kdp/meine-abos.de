@@ -7,7 +7,7 @@
 /config/secrets/prod/prod.decrypt.private.php
 /public/bundles/
 /var/
-!/var/meineabos.db
+!/var/meine-abos.db
 /vendor/
 ###< symfony/framework-bundle ###
 /.idea/
@@ -15,4 +15,5 @@
 /public/img/deineabos.afdesign
 /__MACOSX/
 /deine-abos.de.bhg/
+/.DS_Store
 
