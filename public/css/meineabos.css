@@ -11,6 +11,7 @@
 #fa-user{
     color: #0d6efd;
 }
-.button-col{
-    width: 100%;
+.card-meine-abos{
+    box-shadow: 2px 2px 2px 2px #a6a6a6;
+    margin-top: 1.5em;
 }

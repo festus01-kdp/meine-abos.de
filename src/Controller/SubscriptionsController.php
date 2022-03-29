@@ -54,16 +54,17 @@ class SubscriptionsController extends AbstractController
 
         if ($eingabeFormular->isSubmitted() && $eingabeFormular->isValid()) {
 
-            $em = $mr->getManager();
-            $em->persist($subscription);
-            $em->flush();
+                $em = $mr->getManager();
+                $em->persist($subscription);
+                $em->flush();
 
-            return $this->redirectToRoute('listSubscriptions');
+                return $this->redirectToRoute('listSubscriptions');
 
         }
 
         return $this->render('subscription/new.html.twig', [
-            'formular' => $eingabeFormular->createView()
+            'formular' => $eingabeFormular->createView(),
+            'deletebutton' => false
         ]);
 
 
@@ -89,7 +90,8 @@ class SubscriptionsController extends AbstractController
 
                 return $this->render('subscription/detail.html.twig', [
                     'formular' => $eingabeFormular->createView(),
-                    'title' => $subscription->getName()
+                    'title' => $subscription->getName(),
+                    'deletebutton' => true,
                 ]);
             }
             // Cancel
@@ -102,7 +104,8 @@ class SubscriptionsController extends AbstractController
         // siehe in der twig Datei
         return $this->render('subscription/detail.html.twig', [
             'formular' => $eingabeFormular->createView(),
-            'title' => $subscription->getName()
+            'title' => $subscription->getName(),
+            'deletebutton' => true,
         ]);
 
     }

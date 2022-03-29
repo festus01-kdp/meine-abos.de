@@ -3,52 +3,14 @@
 
     <div class="container">
         <div>
-            <h2 class="text-center">
+            <h3 class="text-center">
                 {{ title }}
-            </h2>
+            </h3>
         </div>
-        <div class="container card" style="box-shadow: 2px 2px 2px 2px #a6a6a6">
+        <div class="container card-meine-abos">
             {{ form_start(formular) }}
-            <div class="row">
-                <div class="col-md-4">
-                    {{ form_label(formular.name) }}
-                    {{ form_widget(formular.name) }}
-                </div>
-                <div class="col-md-2">
-                    {{ form_label(formular.costs) }}
-                    {{ form_widget(formular.costs) }}
-                </div>
-                <div class="col-md-2">
-                    {{ form_label(formular.startDate) }}
-                    {{ form_widget(formular.startDate) }}
-                </div>
-                <div class="col-md-2">
-                    {{ form_label(formular.cancelDate) }}
-                    {{ form_widget(formular.cancelDate) }}
-                </div>
-                <div class="col-md-2">
-                    {{ form_label(formular.period) }}
-                    {{ form_widget(formular.period) }}
-                </div>
-                <div class="col-md-6">
-                    {{ form_label(formular.paymentType) }}
-                    {{ form_widget(formular.paymentType) }}
-                </div>
-                <div class="col-md-6">
-                    {{ form_label(formular.category) }}
-                    {{ form_widget(formular.category) }}
-                </div>
-                <div class="row mt-4">
-                    <div class="col">
-                        {{ form_row(formular.save, {'attr':{'class':'btn-primary'}}) }}
-                    </div>
-                    <div class="col">
-                        {{ form_row(formular.cancel, {'attr':{'class':'btn-primary'}}) }}
-                    </div>
-                </div>
 
-
-            </div>
+            {% include 'subscription/includes/form_detail_new.html.twig' %}
 
             {{ form_end(formular) }}
 
@@ -57,12 +19,3 @@
     </div>
 
 {% endblock %}
-
-{#<div class="col-md-6">#}
-{#    <label for="inputEmail4" class="form-label">Email</label>#}
-{#    <input type="email" class="form-control" id="inputEmail4">#}
-{#</div>#}
-{#<div class="col-md-6">#}
-{#    <label for="inputPassword4" class="form-label">Password</label>#}
-{#    <input type="password" class="form-control" id="inputPassword4">#}
-{#</div>#}
