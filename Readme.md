@@ -1,1 +1,1 @@
-Dies ist die Beschreibung
+Workshop deine-abos.de von Thomas
