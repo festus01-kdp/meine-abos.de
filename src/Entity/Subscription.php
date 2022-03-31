@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace App\Entity;
 
 use DateTime;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\ORM\Mapping as ORM;
@@ -21,6 +23,7 @@ class Subscription
     {
 
         $this->Router = $router;
+        $this->payments = new ArrayCollection();
     }
 
     /**
@@ -72,6 +75,11 @@ class Subscription
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="subscriptions")
      */
     private $user;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Payment::class, mappedBy="subscription", orphanRemoval=true)
+     */
+    private $payments;
 
     // protected array $paymentPeriod = ['Quarter','Monthly','Weekly'];
     // protected String $paymentType;
@@ -192,6 +200,28 @@ class Subscription
     public function setUser(?User $user): self
     {
         $this->user = $user;
+
+        return $this;
+    }
+
+    public function addPayment(Payment $payment): self
+    {
+        if (!$this->payments->contains($payment)) {
+            $this->payments[] = $payment;
+            $payment->setSubscription($this);
+        }
+
+        return $this;
+    }
+
+    public function removePayment(Payment $payment): self
+    {
+        if ($this->payments->removeElement($payment)) {
+            // set the owning side to null (unless already changed)
+            if ($payment->getSubscription() === $this) {
+                $payment->setSubscription(null);
+            }
+        }
 
         return $this;
     }

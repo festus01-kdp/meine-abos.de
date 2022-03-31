@@ -48,8 +48,13 @@ class SubscriptionType extends AbstractType
             ->add('cancelDate', DateType::class, [
                 'widget' => 'single_text'
             ])
+            /** Todo
+             * Button löschen zufügen und im Template die class hidden-row zufügem
+             * damit der Löschbutton nur im Template detailSubscription sichtbar ist
+             */
             ->add('save', SubmitType::class, array('label' => 'Speichern'))
-            ->add('cancel', SubmitType::class, array('label' => 'Zurück'));
+            ->add('cancel', SubmitType::class, array('label' => 'Zurück'))
+            ->add('delete', SubmitType::class, array('label' => 'Löschen'));
     }
 
     public function configureOptions(OptionsResolver $resolver)

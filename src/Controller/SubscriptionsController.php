@@ -49,6 +49,7 @@ class SubscriptionsController extends AbstractController
         $subscription->setUser($this->getUser());
 
         $eingabeFormular = $this->createForm(SubscriptionType::class, $subscription);
+        $paymentFormular = $this->createForm(\App\Form\PaymentType::class);
 
         $eingabeFormular->handleRequest($request);
 
@@ -63,7 +64,8 @@ class SubscriptionsController extends AbstractController
         }
 
         return $this->render('subscription/new.html.twig', [
-            'formular' => $eingabeFormular->createView(),
+            'subscriptionFormular' => $eingabeFormular->createView(),
+            'paymentFormular' => $paymentFormular->createView(),
             'deletebutton' => false
         ]);
 
@@ -77,25 +79,32 @@ class SubscriptionsController extends AbstractController
         $subscription = $mr->getRepository(Subscription::class)->find($id);
         $this->denyAccessUnlessGranted('POST_MANAGE', $subscription);
 
-        $eingabeFormular = $this->createForm(SubscriptionType::class, $subscription);
+        $subscriptionFormular = $this->createForm(SubscriptionType::class, $subscription);
+        $paymentFormular = $this->createForm(\App\Form\PaymentType::class);
+        $subscriptionFormular->handleRequest($request);
 
-        $eingabeFormular->handleRequest($request);
-
-        if ($eingabeFormular->isSubmitted() && $eingabeFormular->isValid()) {
+        if ($subscriptionFormular->isSubmitted() && $subscriptionFormular->isValid()) {
+            $em = $mr->getManager();
             // Speichern
-            if ($eingabeFormular->getClickedButton() === $eingabeFormular->get('save')){
+            if ($subscriptionFormular->getClickedButton() === $subscriptionFormular->get('save')){
 
-                $em = $mr->getManager();
                 $em->flush();
 
                 return $this->render('subscription/detail.html.twig', [
-                    'formular' => $eingabeFormular->createView(),
+                    'subscriptionFormular' => $subscriptionFormular->createView(),
+                    'paymentFormular' => $paymentFormular->createView(),
                     'title' => $subscription->getName(),
                     'deletebutton' => true,
                 ]);
             }
             // Cancel
-            if ($eingabeFormular->getClickedButton() === $eingabeFormular->get('cancel')){
+            if ($subscriptionFormular->getClickedButton() === $subscriptionFormular->get('cancel')){
+                return $this->redirectToRoute('listSubscriptions');
+            }
+            // Löschen
+            if ($subscriptionFormular->getClickedButton() === $subscriptionFormular->get('delete')){
+                $em->remove($subscription);
+                $em->flush();
                 return $this->redirectToRoute('listSubscriptions');
             }
 
@@ -103,7 +112,8 @@ class SubscriptionsController extends AbstractController
         // In detail.html.twig ist formular als Variable verfügbar
         // siehe in der twig Datei
         return $this->render('subscription/detail.html.twig', [
-            'formular' => $eingabeFormular->createView(),
+            'subscriptionFormular' => $subscriptionFormular->createView(),
+            'paymentFormular' => $paymentFormular->createView(),
             'title' => $subscription->getName(),
             'deletebutton' => true,
         ]);

@@ -1,38 +1,117 @@
 <div class="row">
-    <div class="col-md-4">
-        {{ form_label(formular.name) }}
-        {{ form_widget(formular.name) }}
+    {#  Spalte 1  #}
+    <div class="col-sm-8 col-md-6 border-end border-2">
+        <div class="row">
+            <div class="col">
+                {{ form_label(subscriptionFormular.name) }}
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col">
+                {{ form_widget(subscriptionFormular.name) }}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                {{ form_label(subscriptionFormular.costs) }}
+            </div>
+            <div class="col">
+                {{ form_label(subscriptionFormular.period) }}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                {{ form_widget(subscriptionFormular.costs) }}
+            </div>
+            <div class="col">
+                {{ form_widget(subscriptionFormular.period) }}
+            </div>
+        </div>
+
+        <div class="col">
+            <div class="row">
+                <div class="col">
+                    {{ form_label(subscriptionFormular.startDate) }}
+                </div>
+                <div class="col">
+                    {{ form_label(subscriptionFormular.cancelDate) }}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    {{ form_widget(subscriptionFormular.startDate) }}
+                </div>
+                <div class="col">
+                    {{ form_widget(subscriptionFormular.cancelDate) }}
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col">
+                {{ form_label(subscriptionFormular.paymentType) }}
+            </div>
+            <div class="col">
+                {{ form_label(subscriptionFormular.category) }}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                {{ form_widget(subscriptionFormular.paymentType) }}
+            </div>
+            <div class="col">
+                {{ form_widget(subscriptionFormular.category) }}
+            </div>
+        </div>
+
     </div>
-    <div class="col-md-2">
-        {{ form_label(formular.costs) }}
-        {{ form_widget(formular.costs) }}
+    {#  Spalte 2  #}
+    <div class="col">
+        <div class="row">
+            <div class="col">
+                <h3 class="text-center">Zahlungen</h3>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                {{ form_label(paymentFormular.date) }}
+            </div>
+            <div class="col">
+                {{ form_label(paymentFormular.amount) }}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                {{ form_widget(paymentFormular.date) }}
+            </div>
+            <div class="col">
+                {{ form_widget(paymentFormular.amount) }}
+            </div>
+        </div>
+        <div class="row mt-4">
+            <div class="col-2 text-center">
+                {{ form_row(paymentFormular.save, {'attr':{'class':'btn-primary'}}) }}
+            </div>
+        </div>
     </div>
-    <div class="col-md-2">
-        {{ form_label(formular.startDate) }}
-        {{ form_widget(formular.startDate) }}
-    </div>
-    <div class="col-md-2">
-        {{ form_label(formular.cancelDate) }}
-        {{ form_widget(formular.cancelDate) }}
-    </div>
-    <div class="col-md-2">
-        {{ form_label(formular.period) }}
-        {{ form_widget(formular.period) }}
-    </div>
-    <div class="col-md-6">
-        {{ form_label(formular.paymentType) }}
-        {{ form_widget(formular.paymentType) }}
-    </div>
-    <div class="col-md-6">
-        {{ form_label(formular.category) }}
-        {{ form_widget(formular.category) }}
-    </div>
+    {# Buttons #}
     <div class="row mt-4">
-        <div class="col">
-            {{ form_row(formular.save, {'attr':{'class':'btn-primary'}}) }}
+        <div class="col-2 text-center">
+            {{ form_row(subscriptionFormular.save, {'attr':{'class':'btn-primary'}}) }}
         </div>
-        <div class="col">
-            {{ form_row(formular.cancel, {'attr':{'class':'btn-primary'}}) }}
+        <div class="col-2 text-center">
+            {#            {{ form_row(subscriptionFormular.cancel, {'attr':{'class':'btn-primary','formnovalidate':'formnovalidate'}}) }} #}
+            {{ form_row(subscriptionFormular.cancel, {'attr':{'class':'btn-primary'}}) }}
         </div>
+        {% if deletebutton %}
+            <div class="col-2 text-center">
+                {{ form_row(subscriptionFormular.delete, {'attr':{'class':'btn-danger'}}) }}
+            </div>
+        {% else %}
+            <div class="col-2 text-center">
+                {{ form_row(subscriptionFormular.delete, {'attr':{'class':'hidden-row'}}) }}
+            </div>
+        {% endif %}
     </div>
 </div>
