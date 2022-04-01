@@ -33,7 +33,6 @@ class SubscriptionsController extends AbstractController
 
         $subscriptions = $mr->getRepository(Subscription::class)->findBy(['user' => $this->getUser()]);
 
-
         return $this->render('subscription/list.html.twig', [
             'subscriptions' => $subscriptions
         ]);

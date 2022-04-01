@@ -1,0 +1,28 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello RegistrationController!{% endblock %}
+
+{% block body %}
+    <div id="registrierung-form-background">
+        <section class="login-clean registrierung-form">
+            <div class="container text-center mb-3">
+                <h2>
+                    Registrieren
+                </h2>
+            </div>
+            {{ form_start(registration_form) }}
+            <h2 class="visually-hidden">Registrierung</h2>
+            <div class="illustration"><i class="icon ion-ios-navigate"></i></div>
+
+            <div class="mb-3">{{ form_widget(registration_form.email) }}</div>
+
+            <div class="mb-3">{{ form_widget(registration_form.password) }}</div>
+            <div class="mb-3">
+                {{ form_row(registration_form.registrieren, {'attr':{'class':'btn-primary d-block w-100'} }) }}
+            </div>
+            {{ form_end(registration_form) }}
+        </section>
+    </div>
+
+
+{% endblock %}
