@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Form\RegistrationType;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -15,24 +16,37 @@ use Doctrine\Persistence\ManagerRegistry;
 class RegistrationController extends AbstractController
 {
     #[Route('/registration', name: 'app_registration')]
-    public function registrieren(Request $request, UserPasswordHasherInterface $userPasswordHasher, ManagerRegistry $managerRegistry): Response
+    public function registrieren(Request $request, UserPasswordHasherInterface $userPasswordHasher, ManagerRegistry $managerRegistry, EntityManagerInterface $entityManager): Response
     {
         $registrationForm = $this->createForm(RegistrationType::class);
 
         $registrationForm->handleRequest($request);
 
         if($registrationForm->isSubmitted() && $registrationForm->isValid()){
+
             $data = $registrationForm->getData();
-            $user = (new User())
-                ->setEmail($data['email']);
-            $role = ['1' => 'ROLE_USER'];
-            $user->setRoles($role);
-            $user
-                ->setPassword($userPasswordHasher->hashPassword($user,$data['password']));
-            $em = $managerRegistry->getManager();
-            $em->persist($user);
-            $em->flush();
-            return $this->redirectToRoute('app_login');
+            /**TODO: Auf doppelte E-MAil prüfen
+             *
+             */
+            $user =
+                $entityManager->getRepository(User::class)->findOneBy(['email' => $data['email']]);
+            if (!$user){
+                $user = new User();
+                $user->setEmail($data['email']);
+                $role = ['USER' => 'ROLE_USER'];
+                $user->setRoles($role);
+                $user->setPassword($userPasswordHasher->hashPassword($user,$data['password']));
+
+                $entityManager->persist($user);
+                $entityManager->flush();
+
+                return $this->redirectToRoute('app_login');
+            } else {
+                //TODO: Hier eine schöne HTML-Fehlerseite bauen
+                return new Response('<h1>Ups, da ist ein Fehler aufgetreten</h1>',404,['Header1' => 'Was ist da los']);
+
+            }
+
         }
 
         return $this->render('registration/registration.html.twig', [
