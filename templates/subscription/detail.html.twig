@@ -1,22 +1,96 @@
 {% extends 'base.html.twig' %}
 {% block body %}
 
-    <div class="container">
-        <div>
-            <h3 class="text-center">
-                {{ title }}
-            </h3>
+<div class="container">
+    <div>
+        <h3 class="text-center">
+            {{ title }}
+        </h3>
+    </div>
+    <div class="container card-meine-abos">
+        <div class="row">
+            <div class="col">
+                {{ form_start(subscriptionFormular) }}
+                <div class="row">
+                    <div class="col">
+                        {{ form_label(subscriptionFormular.name) }}
+                        {{ form_widget(subscriptionFormular.name) }}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        {{ form_label(subscriptionFormular.costs) }}
+                        {{ form_widget(subscriptionFormular.costs) }}
+                    </div>
+                    <div class="col">
+                        {{ form_label(subscriptionFormular.period) }}
+                        {{ form_widget(subscriptionFormular.period) }}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        {{ form_label(subscriptionFormular.startDate) }}
+                        {{ form_widget(subscriptionFormular.startDate) }}
+                    </div>
+                    <div class="col">
+                        {{ form_label(subscriptionFormular.cancelDate) }}
+                        {{ form_widget(subscriptionFormular.cancelDate) }}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        {{ form_label(subscriptionFormular.paymentType) }}
+                        {{ form_widget(subscriptionFormular.paymentType) }}
+                    </div>
+                    <div class="col">
+                        {{ form_label(subscriptionFormular.category) }}
+                        {{ form_widget(subscriptionFormular.category) }}
+                    </div>
+                </div>
+                <div class="row mt-4">
+                    <div class="col">
+                        {{ form_row(subscriptionFormular.save, {'attr':{'class':'btn-primary'}}) }}
+                    </div>
+                    <div class="col">
+                        {{ form_row(subscriptionFormular.cancel, {'attr':{'class':'btn-primary'}}) }}
+                    </div>
+                    {% if deletebutton %}
+                    <div class="col-2 text-center">
+                            {{ form_row(subscriptionFormular.delete, {'attr':{'class':'btn-danger'}}) }}
+                    </div>
+                    {% else %}
+                    <div class="col-2 text-center">
+                            {{ form_row(subscriptionFormular.delete, {'attr':{'class':'hidden-row'}}) }}
+                    </div>
+                    {% endif %}
+                </div>
+                {{ form_end(subscriptionFormular) }}
+            </div>
+            {# Ende subscription Formulat #}
+            {# Spalte 2 #}
+            {# Beginn payment Formular #}
+            <div class="col">
+                {{ form_start(paymentFormular) }}
+                <div class="row">
+                    <div class="col">
+                        {{ form_label(paymentFormular.date) }}
+                        {{ form_widget(paymentFormular.date) }}
+                    </div>
+                    <div class="col">
+                        {{ form_label(paymentFormular.amount) }}
+                        {{ form_widget(paymentFormular.amount) }}
+                    </div>
+                </div>
+                <div class="row mt-4">
+                    <div class="col text-center">
+                        {{ form_row(paymentFormular.save, {'attr':{'class':'btn-primary'}}) }}
+                    </div>
+                </div>
+                {{ form_end(paymentFormular) }}
+            </div>
+
         </div>
-        <div class="container card-meine-abos">
-            {{ form_start(subscriptionFormular) }}
-            {{ form_start(paymentFormular) }}
-            {% include 'subscription/includes/form_detail_new.html.twig' %}
-
-            {{ form_end(paymentFormular) }}
-            {{ form_end(subscriptionFormular) }}
-
-        </div>
-
     </div>
 
-{% endblock %}
+
+    {% endblock %}
