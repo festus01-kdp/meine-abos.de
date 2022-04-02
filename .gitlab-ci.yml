@@ -1,7 +1,7 @@
 stages:
   - deploy
 
-deploy branch payment:
+deploy branch registration:
   stage: deploy
   before_script:
     - eval $(ssh-agent -s)
