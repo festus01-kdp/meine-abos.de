@@ -29,7 +29,10 @@ class RegistrationController extends AbstractController
              *
              */
             $user =
-                $entityManager->getRepository(User::class)->findOneBy(['email' => $data['email']]);
+                $entityManager
+                    ->getRepository(User::class)
+                    ->findOneBy(['email' => $data['email']]);
+
             if (!$user){
                 $user = new User();
                 $user->setEmail($data['email']);
@@ -43,7 +46,7 @@ class RegistrationController extends AbstractController
                 return $this->redirectToRoute('app_login');
             } else {
                 //TODO: Hier eine schöne HTML-Fehlerseite bauen
-                return new Response('<h1>Ups, da ist ein Fehler aufgetreten</h1>',404,['Header1' => 'Was ist da los']);
+                return new Response('<h1>Ups, da ist ein Fehler aufgetreten</h1>',403,['Header1' => 'Was ist da los']);
 
             }
 
