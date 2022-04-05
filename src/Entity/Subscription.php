@@ -102,12 +102,12 @@ class Subscription
         return $this;
     }
 
-    public function getPayments(): string
+    public function getPayments(): Collection
     {
         return $this->payments;
     }
 
-    public function setPayments(string $payments): self
+    public function setPayments(Collection $payments): self
     {
         $this->payments = $payments;
         return $this;

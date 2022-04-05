@@ -10,6 +10,11 @@
     <div class="container card-meine-abos">
         <div class="row">
             <div class="col">
+                <div class="row mt-3">
+                    <div class="col">
+                        <h4 class="text-center">Abo</h4>
+                    </div>
+                </div>
                 {{ form_start(subscriptionFormular) }}
                 <div class="row">
                     <div class="col">
@@ -55,21 +60,26 @@
                         {{ form_row(subscriptionFormular.cancel, {'attr':{'class':'btn-primary'}}) }}
                     </div>
                     {% if deletebutton %}
-                    <div class="col-2 text-center">
+                        <div class="col-2 text-center">
                             {{ form_row(subscriptionFormular.delete, {'attr':{'class':'btn-danger'}}) }}
-                    </div>
+                        </div>
                     {% else %}
-                    <div class="col-2 text-center">
+                        <div class="col-2 text-center">
                             {{ form_row(subscriptionFormular.delete, {'attr':{'class':'hidden-row'}}) }}
-                    </div>
+                        </div>
                     {% endif %}
                 </div>
                 {{ form_end(subscriptionFormular) }}
             </div>
-            {# Ende subscription Formulat #}
+            {# Ende subscription Formular #}
             {# Spalte 2 #}
             {# Beginn payment Formular #}
             <div class="col">
+                <div class="row mt-3">
+                    <div class="col">
+                        <h4 class="text-center">Zahlung erfassen</h4>
+                    </div>
+                </div>
                 {{ form_start(paymentFormular) }}
                 <div class="row">
                     <div class="col">
@@ -87,10 +97,34 @@
                     </div>
                 </div>
                 {{ form_end(paymentFormular) }}
+                {# Liste payments wird von js gefüllt #}
+                {# oder über include wenn detail initialisiert wird #}
+                <div class="row mt-3">
+                    <div id="payments-list">
+                        {% include('payment/list.html.twig') %}
+                    </div>
+                </div>
             </div>
-
         </div>
     </div>
+    {% endblock %}
 
-
+    {% block javascripts %}
+        {{ parent() }}
+        <script src="{{ asset('js/meineabos.js') }}"></script>
+        <script type="text/javascript">
+            $('#add_payment_form').on('submit', function (event) {
+                event.preventDefault();
+                let url = "{{ path('add_payment', {'id': id}) }}";
+                let formData = $(this).serialize();
+                $.ajax({
+                    url: url,
+                    method: 'POST',
+                    data: formData
+                }).done(function (response){
+                    console.log(response);
+                     $('#payments-list').html(response);
+                });
+            });
+        </script>
     {% endblock %}

@@ -1,0 +1,14 @@
+<h3 class="text-center">Erfasste Zahlungen</h3>
+<table class="table table-hover">
+    <tbody>
+
+        {% for payment in payments %}
+        <tr>
+            <td>{{ payment.date | format_datetime() }}</td>
+            <td>{{ payment.amount }}</td>
+        </tr>
+        {% endfor %}
+
+    </tbody>
+
+</table>

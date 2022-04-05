@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Payment;
 use App\Entity\PaymentType;
 use App\Entity\Subscription;
 use App\Form\SubscriptionType;
@@ -75,7 +76,12 @@ class SubscriptionsController extends AbstractController
      */
     public function detail(int $id, Request $request, ManagerRegistry $mr): Response
     {
+        /** @var Subscription $subscription */
         $subscription = $mr->getRepository(Subscription::class)->find($id);
+
+        $payments = $mr->getRepository(Payment::class)->findBy(['subscription' => $subscription]);
+//        dd($payments);
+
         $this->denyAccessUnlessGranted('POST_MANAGE', $subscription);
 
         $subscriptionFormular = $this->createForm(SubscriptionType::class, $subscription);
@@ -93,6 +99,7 @@ class SubscriptionsController extends AbstractController
                     'subscriptionFormular' => $subscriptionFormular->createView(),
                     'paymentFormular' => $paymentFormular->createView(),
                     'title' => $subscription->getName(),
+                    'id' => $subscription->getId(),
                     'deletebutton' => true,
                 ]);
             }
@@ -110,10 +117,13 @@ class SubscriptionsController extends AbstractController
         }
         // In detail.html.twig ist formular als Variable verfügbar
         // siehe in der twig Datei
+
         return $this->render('subscription/detail.html.twig', [
             'subscriptionFormular' => $subscriptionFormular->createView(),
             'paymentFormular' => $paymentFormular->createView(),
             'title' => $subscription->getName(),
+            'id' => $subscription->getId(),
+            'payments' => $payments,
             'deletebutton' => true,
         ]);
 
